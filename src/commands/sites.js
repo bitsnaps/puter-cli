@@ -43,7 +43,7 @@ export async function listSites(args = {}) {
           formatDate(domain.created_at).split(',')[0],
           domain.protected ? chalk.red('Yes') : chalk.green('No'),
         //   domain.owner['username'],
-          appDir.length == 6?`${appDir[0]}-...-${appDir.slice(-1)}`:appDir.join('-')
+          appDir && (appDir.length == 6?`${appDir[0]}-...-${appDir.slice(-1)}`:appDir.join('-'))
         ]);
       });
   
