@@ -163,7 +163,9 @@ export async function execCommand(input) {
     // Handle help command
     const command = args[0];
     showHelp(command);
-  } else if (cmd.startsWith('!')) {
+    return;
+  }
+  if (cmd.startsWith('!')) {
     // Execute the command on the host machine
     const hostCommand = input.slice(1); // Remove the "!"
     exec(hostCommand, (error, stdout, stderr) => {
@@ -178,17 +180,20 @@ export async function execCommand(input) {
       console.log(stdout);
       console.log(chalk.green(`Press <Enter> to return.`));
     });
-  } else if (commands[cmd]) {
+    return;
+  }
+  if (commands[cmd]) {
     try {
       await commands[cmd](args);
     } catch (error) {
       console.error(chalk.red(`Error executing command: ${error.message}`));
     }
-  } else {
-    if (!['Y', 'N'].includes(cmd.toUpperCase()[0])) {
-      console.log(chalk.red(`Unknown command: ${cmd}`));
-      showHelp();
-    }
+    return;
+  }
+
+  if (!['Y', 'N'].includes(cmd.toUpperCase()[0])) {
+    console.log(chalk.red(`Unknown command: ${cmd}`));
+    showHelp();
   }
 }
 
