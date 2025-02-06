@@ -121,7 +121,7 @@ export async function infoSite(args = []) {
         }
     
         const data = await response.json();
-        const result = await deleteSubdomain(uuid);
+        const result = await deleteSubdomain([uuid]);
         if (result){
             // check if data is empty object
             if (Object.keys(data).length === 0){
@@ -183,7 +183,7 @@ export async function infoSite(args = []) {
                 } else {
                     console.log(chalk.yellow(`However, It's linked to different directory at: ${subdomainObj.root_dir?.path}`));
                     console.log(chalk.cyan(`We'll try to unlink this subdomain from that directory...`));
-                    const result = await deleteSubdomain(subdomainObj?.uid);
+                    const result = await deleteSubdomain([subdomainObj?.uid]);
                     if (result) {
                         console.log(chalk.green('Looks like this subdomain is free again, please try again.'));
                         return;
